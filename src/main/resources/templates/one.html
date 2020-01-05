@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="table table-striped table-bordered table-hover " style="width:80%" align="center">
+    <thead class="label-info">
+    <tr><span style="color:white">序号</span></tr>
+    <tr><span style="color:white">姓名</span></tr>
+    <tr><span style="color:white">年龄</span></tr>
+    </thead>
+    <tbody>
+    <tr th:each="user">
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.model.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.model.User">
+    insert into user (id, name, age)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.model.User">
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, name, age
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, age
+    from user
+    limit 10
+  </select>
+
+  <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
+    select id, name, age
+    from user where name =#{name}
+  </select>
+
+  <select id="selectByNameOrAge" parameterType="com.model.User" resultMap="BaseResultMap">
+    select * from user
+    <choose>
+      <when  test="name!=null and name.trim()!=''">
+        where name=#{name}
+      </when>
+
+      <when test="age!=null">
+        where age=#{age}
+      </when>
+
+      <otherwise>
+        where age > 0
+        limit 10
+      </otherwise>
+    </choose>
+
+  </select>
+</mapper>
